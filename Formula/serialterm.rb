@@ -4,8 +4,8 @@ class Serialterm < Formula
   license "GPL-3.0-or-later"
   head "https://github.com/mousebrains/SerialTerm.git", branch: "main"
 
-  depends_on macos: :sequoia
   depends_on "lrzsz"
+  depends_on macos: :sequoia
 
   def install
     swift = Utils.safe_popen_read("swift", "--version")[/Swift version (\d+(?:\.\d+)+)/, 1]
