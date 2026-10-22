@@ -1,10 +1,9 @@
 class Serialterm < Formula
-  desc "Serial terminal for USB-serial instruments, with built-in ZMODEM"
+  desc "Serial terminal for USB-serial instruments, with built-in ZMODEM/XMODEM/YMODEM"
   homepage "https://github.com/mousebrains/SerialTerm"
   license "GPL-3.0-or-later"
   head "https://github.com/mousebrains/SerialTerm.git", branch: "main"
 
-  depends_on "lrzsz"
   depends_on macos: :sequoia
 
   def install
