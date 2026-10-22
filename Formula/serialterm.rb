@@ -13,6 +13,11 @@ class Serialterm < Formula
            "found #{swift || "none"}."
     end
 
+    # Homebrew builds against the SDK for the running macOS, which on Sequoia is a macOS 15 SDK. Swift's
+    # standard library comes with the SDK, and SwiftTerm needs 6.2's, so use the one that came with
+    # this Swift.
+    ENV["SDKROOT"] = Utils.safe_popen_read("/usr/bin/xcrun", "--sdk", "macosx", "--show-sdk-path").chomp
+
     # SwiftPM's own sandbox can't run inside Homebrew's.
     ENV["SWIFT_BUILD_FLAGS"] = "--disable-sandbox"
     ENV["VERSION"] = version.to_s
