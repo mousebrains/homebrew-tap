@@ -1,10 +1,9 @@
 class Serialterm < Formula
-  desc "Serial terminal for USB-serial instruments, with built-in ZMODEM"
+  desc "Serial terminal for USB-serial instruments, with built-in ZMODEM/XMODEM/YMODEM"
   homepage "https://github.com/mousebrains/SerialTerm"
   license "GPL-3.0-or-later"
   head "https://github.com/mousebrains/SerialTerm.git", branch: "main"
 
-  depends_on "lrzsz"
   depends_on macos: :sequoia
 
   def install
@@ -13,6 +12,11 @@ class Serialterm < Formula
       odie "SerialTerm needs Swift 6.2 or later (Xcode 26 or the Command Line Tools 26); " \
            "found #{swift || "none"}."
     end
+
+    # Homebrew builds against the SDK for the running macOS, which on Sequoia is a macOS 15 SDK. Swift's
+    # standard library comes with the SDK, and SwiftTerm needs 6.2's, so use the one that came with
+    # this Swift.
+    ENV["SDKROOT"] = Utils.safe_popen_read("/usr/bin/xcrun", "--sdk", "macosx", "--show-sdk-path").chomp
 
     # SwiftPM's own sandbox can't run inside Homebrew's.
     ENV["SWIFT_BUILD_FLAGS"] = "--disable-sandbox"
